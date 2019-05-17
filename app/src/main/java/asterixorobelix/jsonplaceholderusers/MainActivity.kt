@@ -30,7 +30,8 @@ class MainActivity : AppCompatActivity() {
 
             userButton.setOnClickListener {
                 if (isConnectedToInternet(applicationContext)) {
-                    UserFragment().showNow(supportFragmentManager,USER_EMAIL_TAG)
+                    //todo remove hardcoded email
+                    UserFragment("samanthaemail@email.com").showNow(supportFragmentManager,USER_EMAIL_TAG)
                 } else {
                     makeNoInternetConnectionToast(applicationContext)
                 }
