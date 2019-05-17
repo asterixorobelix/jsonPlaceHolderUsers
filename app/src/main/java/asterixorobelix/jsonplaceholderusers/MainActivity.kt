@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import asterixorobelix.jsonplaceholderusers.databinding.ActivityMainBinding
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,10 +17,23 @@ class MainActivity : AppCompatActivity() {
         viewBinding = DataBindingUtil.setContentView(
             this, R.layout.activity_main
         )
-        
-        viewBinding.usersButton.setOnClickListener {
-            val toast = Toast.makeText(applicationContext, "Clicked!", Toast.LENGTH_LONG)
-            toast.show()
+
+        viewBinding.apply {
+            usersButton.setOnClickListener {
+                if (isConnectedToInternet(applicationContext)) {
+
+                } else {
+                    makeNoInternetConnectionToast(applicationContext)
+                }
+            }
+
+            userButton.setOnClickListener {
+                if (isConnectedToInternet(applicationContext)) {
+
+                } else {
+                    makeNoInternetConnectionToast(applicationContext)
+                }
+            }
         }
     }
 }
