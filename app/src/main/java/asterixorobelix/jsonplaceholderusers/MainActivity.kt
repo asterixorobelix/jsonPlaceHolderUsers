@@ -61,6 +61,12 @@ class MainActivity : AppCompatActivity() {
                     usersButton.isEnabled = false
                 }
             }
+            else{
+                viewBinding.apply {
+                    userButton.isEnabled = true
+                    usersButton.isEnabled = true
+                }
+            }
         })
     }
 
