@@ -56,8 +56,10 @@ class MainActivity : AppCompatActivity() {
 
         mainActivityViewModel.users.observe(this, Observer {
             if (it.isNullOrEmpty()) {
-                viewBinding.userButton.isEnabled = false
-                viewBinding.usersButton.isEnabled = false
+                viewBinding.apply {
+                    userButton.isEnabled = false
+                    usersButton.isEnabled = false
+                }
             }
         })
     }
