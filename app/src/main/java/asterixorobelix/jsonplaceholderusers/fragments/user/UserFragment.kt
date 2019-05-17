@@ -11,6 +11,8 @@ class UserFragment(private val userEmail: String) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
+            //prevent crash on activity rotation
+            retainInstance = true
             // Use the Builder class for convenient dialog construction
             val builder = AlertDialog.Builder(it)
             builder.setMessage(getString(R.string.user_email, userEmail))
