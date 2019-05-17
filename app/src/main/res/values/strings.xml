@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">JsonPlaceholderUsers</string>
+    <string name="show_users_button_text">Show Users</string>
+    <string name="show_samantha_details_button_text">Show Samantha\'s details</string>
 </resources>
