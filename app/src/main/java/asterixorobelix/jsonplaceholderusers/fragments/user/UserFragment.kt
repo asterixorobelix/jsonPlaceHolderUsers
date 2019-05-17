@@ -7,14 +7,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import asterixorobelix.jsonplaceholderusers.R
 
-class UserFragment(userEmail: String) : DialogFragment() {
-    private val _userEmail: String = userEmail
+class UserFragment(private val userEmail: String) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             // Use the Builder class for convenient dialog construction
             val builder = AlertDialog.Builder(it)
-            builder.setMessage(getString(R.string.user_email, _userEmail))
+            builder.setMessage(getString(R.string.user_email, userEmail))
             builder.setTitle(getString(R.string.email_alert_title))
                 .setPositiveButton(getString(R.string.ok_button_text),
                     DialogInterface.OnClickListener { dialog, id ->

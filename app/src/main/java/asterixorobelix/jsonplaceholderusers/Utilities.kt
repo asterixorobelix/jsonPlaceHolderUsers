@@ -1,7 +1,6 @@
 package asterixorobelix.jsonplaceholderusers
 
 import android.content.Context
-import android.content.res.Resources
 import android.net.ConnectivityManager
 import android.widget.Toast
 
