@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import asterixorobelix.jsonplaceholderusers.databinding.ActivityMainBinding
 import asterixorobelix.jsonplaceholderusers.fragments.user.UserFragment
 import asterixorobelix.jsonplaceholderusers.users.UsersFragment
@@ -34,16 +36,26 @@ class MainActivity : AppCompatActivity() {
             }
 
             userButton.setOnClickListener {
-                if (mainActivityViewModel.userEmail.value!=null) {
-                    UserFragment(mainActivityViewModel.userEmail.value!!).showNow(supportFragmentManager,USER_EMAIL_TAG)
+                if (mainActivityViewModel.userEmail.value != null) {
+                    UserFragment(mainActivityViewModel.userEmail.value!!).showNow(
+                        supportFragmentManager,
+                        USER_EMAIL_TAG
+                    )
                 } else {
                     makeToast(applicationContext, getString(R.string.no_email_samantha))
                 }
             }
         }
+
+        mainActivityViewModel.users.observe(this, Observer {
+            if (it.isNullOrEmpty()) {
+                viewBinding.userButton.isEnabled = false
+                viewBinding.usersButton.isEnabled = false
+            }
+        })
     }
 
-    companion object{
+    companion object {
         const val USER_EMAIL_TAG = "user email"
         const val USERS_TAG = "users"
     }
