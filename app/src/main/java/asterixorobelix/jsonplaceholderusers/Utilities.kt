@@ -10,8 +10,8 @@ fun makeToast(context: Context, textToDisplay: String){
     toast.show()
 }
 
-fun makeNoInternetConnectionToast(context: Context){
-    makeToast(context,Resources.getSystem().getString(R.string.no_internet))
+fun makeNoInternetConnectionToast(context: Context, noInternetText: String){
+    makeToast(context,noInternetText)
 }
 
 fun isConnectedToInternet(context: Context?): Boolean {

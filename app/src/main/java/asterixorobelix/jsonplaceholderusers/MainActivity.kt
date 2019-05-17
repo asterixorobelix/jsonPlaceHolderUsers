@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import asterixorobelix.jsonplaceholderusers.databinding.ActivityMainBinding
 import asterixorobelix.jsonplaceholderusers.fragments.user.UserFragment
+import asterixorobelix.jsonplaceholderusers.users.UsersFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -25,10 +26,10 @@ class MainActivity : AppCompatActivity() {
 
         viewBinding.apply {
             usersButton.setOnClickListener {
-                if (isConnectedToInternet(applicationContext)) {
-
+                if (isConnectedToInternet(applicationContext) && !mainActivityViewModel.users.value.isNullOrEmpty()) {
+                    UsersFragment().showNow(supportFragmentManager, USERS_TAG)
                 } else {
-                    makeNoInternetConnectionToast(applicationContext)
+                    makeNoInternetConnectionToast(applicationContext, getString(R.string.no_internet))
                 }
             }
 
