@@ -7,4 +7,5 @@
     <string name="ok_button_text">ok</string>
     <string name="cancel_button_text">cancel</string>
     <string name="user_email">Email address: %s</string>
+    <string name="no_email_samantha">No email address for Samantha!</string>
 </resources>
