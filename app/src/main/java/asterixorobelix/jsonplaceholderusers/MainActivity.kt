@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import asterixorobelix.jsonplaceholderusers.databinding.ActivityMainBinding
+import asterixorobelix.jsonplaceholderusers.fragments.user.UserFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -29,11 +30,16 @@ class MainActivity : AppCompatActivity() {
 
             userButton.setOnClickListener {
                 if (isConnectedToInternet(applicationContext)) {
-
+                    UserFragment().showNow(supportFragmentManager,USER_EMAIL_TAG)
                 } else {
                     makeNoInternetConnectionToast(applicationContext)
                 }
             }
         }
+    }
+
+    companion object{
+        const val USER_EMAIL_TAG = "user email"
+        const val USERS_TAG = "users"
     }
 }

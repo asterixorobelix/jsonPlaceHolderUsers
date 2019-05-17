@@ -3,4 +3,7 @@
     <string name="show_users_button_text">Show Users</string>
     <string name="show_samantha_details_button_text">Show Samantha\'s details</string>
     <string name="no_internet">No Internet connection!</string>
+    <string name="email_alert_title">Email Address</string>
+    <string name="ok_button_text">ok</string>
+    <string name="cancel_button_text">cancel</string>
 </resources>
