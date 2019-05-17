@@ -8,6 +8,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import asterixorobelix.jsonplaceholderusers.databinding.ActivityMainBinding
 import asterixorobelix.jsonplaceholderusers.fragments.user.UserFragment
+import asterixorobelix.jsonplaceholderusers.models.User
 import asterixorobelix.jsonplaceholderusers.users.UsersFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -29,7 +30,13 @@ class MainActivity : AppCompatActivity() {
         viewBinding.apply {
             usersButton.setOnClickListener {
                 if (isConnectedToInternet(applicationContext) && !mainActivityViewModel.users.value.isNullOrEmpty()) {
-                    UsersFragment().showNow(supportFragmentManager, USERS_TAG)
+                    if(mainActivityViewModel.users.value!=null){
+                        val usersNames1 = mutableListOf<String>()
+                        for(user in mainActivityViewModel.users.value as List<User>){
+                            usersNames1.add(user.name)
+                        }
+                        UsersFragment(usersNames1.toTypedArray()).showNow(supportFragmentManager, USERS_TAG)
+                    }
                 } else {
                     makeNoInternetConnectionToast(applicationContext, getString(R.string.no_internet))
                 }

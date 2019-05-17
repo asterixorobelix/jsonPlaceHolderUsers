@@ -20,6 +20,6 @@ class MainActivityViewModel: ViewModel() {
     init {
         _users.value = null
         userEmail.value = "samanthaemail@email.com"
-        //_users.value = listOf(User(address = Address("Holy","moly","cape","town",Geo(23.2,35.4)),id = 1,username = "dawg", name = "Holy", company = Company("disney","whatUp?","Holla"),email = "@@email",phone = "phone",website = "www.website.com"))
+        _users.value = listOf(User(address = Address("Holy","moly","cape","town",Geo(23.2,35.4)),id = 1,username = "dawg", name = "Holy", company = Company("disney","whatUp?","Holla"),email = "@@email",phone = "phone",website = "www.website.com"))
     }
 }
