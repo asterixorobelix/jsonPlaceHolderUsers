@@ -9,6 +9,7 @@ import asterixorobelix.jsonplaceholderusers.models.Geo
 import asterixorobelix.jsonplaceholderusers.models.User
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.lang.Exception
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.coroutineContext
 
@@ -23,15 +24,23 @@ class MainActivityViewModel: ViewModel() {
 
     init {
         _users.value = null
-        userEmail.value = "samanthaemail@email.com"
         GlobalScope.launch {
-            val response = Repository().getUsers()
-            if(response.isSuccessful){
-                val users =  response.body()
-                var aa = _users.value
-                aa = users
-                _users.postValue(aa)
+            try{
+                val response = Repository().getUsers()
+                if(response.isSuccessful){
+                    //marshal back to main thread
+                    _users.postValue(response.body())
+                    userEmail.postValue(response.body()?.find { user -> user.username == USERNAME }?.email)
+                }
             }
+            //handle no internet connection
+            catch (ex: Exception){
+
+            }
+
         }
+    }
+    companion object{
+        const val USERNAME = "Samantha"
     }
 }
