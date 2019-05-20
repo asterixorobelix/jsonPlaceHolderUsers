@@ -2,6 +2,7 @@ package asterixorobelix.jsonplaceholderusers
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
@@ -11,6 +12,7 @@ import asterixorobelix.jsonplaceholderusers.fragments.user.UserFragment
 import asterixorobelix.jsonplaceholderusers.models.User
 import asterixorobelix.jsonplaceholderusers.users.UsersFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -59,10 +61,12 @@ class MainActivity : AppCompatActivity() {
                 viewBinding.apply {
                     userButton.isEnabled = false
                     usersButton.isEnabled = false
+                    progressBar.visibility = View.VISIBLE
                 }
             }
             else{
                 viewBinding.apply {
+                    progressBar.visibility = View.GONE
                     userButton.isEnabled = true
                     usersButton.isEnabled = true
                 }
