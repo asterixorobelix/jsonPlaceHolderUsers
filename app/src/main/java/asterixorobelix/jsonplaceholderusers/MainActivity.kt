@@ -7,27 +7,32 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import asterixorobelix.jsonplaceholderusers.api.UsersService
 import asterixorobelix.jsonplaceholderusers.databinding.ActivityMainBinding
 import asterixorobelix.jsonplaceholderusers.fragments.user.UserFragment
 import asterixorobelix.jsonplaceholderusers.models.User
 import asterixorobelix.jsonplaceholderusers.users.UsersFragment
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewBinding: ActivityMainBinding
     private lateinit var mainActivityViewModel: MainActivityViewModel
+    @Inject lateinit var usersService: UsersService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        AndroidInjection.inject(this)
         viewBinding = DataBindingUtil.setContentView(
             this, R.layout.activity_main
         )
 
         //todo remove hardcoded viewmodel ref
-        mainActivityViewModel = MainActivityViewModel()
+        mainActivityViewModel = MainActivityViewModel(usersService)
+        mainActivityViewModel.getUsers()
 
         viewBinding.apply {
             usersButton.setOnClickListener {
