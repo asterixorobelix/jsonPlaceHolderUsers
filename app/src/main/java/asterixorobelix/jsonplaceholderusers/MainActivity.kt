@@ -3,25 +3,21 @@ package asterixorobelix.jsonplaceholderusers
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import asterixorobelix.jsonplaceholderusers.api.UsersService
 import asterixorobelix.jsonplaceholderusers.databinding.ActivityMainBinding
 import asterixorobelix.jsonplaceholderusers.fragments.user.UserFragment
 import asterixorobelix.jsonplaceholderusers.models.User
 import asterixorobelix.jsonplaceholderusers.users.UsersFragment
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewBinding: ActivityMainBinding
     private lateinit var mainActivityViewModel: MainActivityViewModel
-    @Inject lateinit var usersService: UsersService
+    @Inject
+    lateinit var repository: Repository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,15 +27,15 @@ class MainActivity : AppCompatActivity() {
         )
 
         //todo remove hardcoded viewmodel ref
-        mainActivityViewModel = MainActivityViewModel(usersService)
+        mainActivityViewModel = MainActivityViewModel(repository)
         mainActivityViewModel.getUsers()
 
         viewBinding.apply {
             usersButton.setOnClickListener {
                 if (isConnectedToInternet(applicationContext) && !mainActivityViewModel.users.value.isNullOrEmpty()) {
-                    if(mainActivityViewModel.users.value!=null){
+                    if (mainActivityViewModel.users.value != null) {
                         val usersNames1 = mutableListOf<String>()
-                        for(user in mainActivityViewModel.users.value as List<User>){
+                        for (user in mainActivityViewModel.users.value as List<User>) {
                             usersNames1.add(user.name)
                         }
                         UsersFragment(usersNames1.toTypedArray()).showNow(supportFragmentManager, USERS_TAG)
@@ -68,8 +64,7 @@ class MainActivity : AppCompatActivity() {
                     usersButton.isEnabled = false
                     progressBar.visibility = View.VISIBLE
                 }
-            }
-            else{
+            } else {
                 viewBinding.apply {
                     progressBar.visibility = View.GONE
                     userButton.isEnabled = true

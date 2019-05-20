@@ -1,8 +1,5 @@
 package asterixorobelix.jsonplaceholderusers.di
 
-import android.app.Application
-import asterixorobelix.jsonplaceholderusers.App
-import asterixorobelix.jsonplaceholderusers.Repository
 import asterixorobelix.jsonplaceholderusers.api.UsersService
 import dagger.Module
 import dagger.Provides
