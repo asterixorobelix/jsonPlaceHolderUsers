@@ -58,18 +58,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         mainActivityViewModel.users.observe(this, Observer {
-            if (it.isNullOrEmpty()) {
-                viewBinding.apply {
-                    userButton.isEnabled = false
-                    usersButton.isEnabled = false
-                    progressBar.visibility = View.VISIBLE
-                }
-            } else {
-                viewBinding.apply {
-                    progressBar.visibility = View.GONE
-                    userButton.isEnabled = true
-                    usersButton.isEnabled = true
-                }
+            viewBinding.apply {
+                userButton.isEnabled = !it.isNullOrEmpty()
+                usersButton.isEnabled = !it.isNullOrEmpty()
+                progressBar.visibility = if (it.isNullOrEmpty()) View.VISIBLE else View.GONE
             }
         })
     }
