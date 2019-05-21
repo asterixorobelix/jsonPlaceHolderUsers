@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
 
-class MainActivityViewModel @Inject constructor(private val repository: Repository): ViewModel() {
+class MainActivityViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
 
     val users: LiveData<List<User>?>
         get() = _users
@@ -25,22 +25,23 @@ class MainActivityViewModel @Inject constructor(private val repository: Reposito
     private fun getUsers() {
         _users.value = null
         GlobalScope.launch {
-            try{
+            try {
                 val response = repository.getUsers()
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     //marshal back to main thread. Posts a task to a main thread to set the given value.
                     _users.postValue(response.body())
                     userEmail.postValue(response.body()?.find { user -> user.username == USERNAME }?.email)
                 }
             }
             //handle no internet connection or other problems
-            catch (ex: Exception){
+            catch (ex: Exception) {
 
             }
 
         }
     }
-    companion object{
+
+    companion object {
         const val USERNAME = "Samantha"
     }
 }

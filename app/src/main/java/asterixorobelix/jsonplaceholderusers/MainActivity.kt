@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import asterixorobelix.jsonplaceholderusers.databinding.ActivityMainBinding
+import asterixorobelix.jsonplaceholderusers.di.ViewModelFactory
 import asterixorobelix.jsonplaceholderusers.fragments.user.UserFragment
 import asterixorobelix.jsonplaceholderusers.models.User
 import asterixorobelix.jsonplaceholderusers.users.UsersFragment
@@ -16,8 +18,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var viewBinding: ActivityMainBinding
     private lateinit var mainActivityViewModel: MainActivityViewModel
+
     @Inject
-    lateinit var repository: Repository
+    lateinit var viewModelFactory: ViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,8 +29,7 @@ class MainActivity : AppCompatActivity() {
             this, R.layout.activity_main
         )
 
-        //todo remove hardcoded viewmodel ref
-        mainActivityViewModel = MainActivityViewModel(repository)
+        mainActivityViewModel = ViewModelProviders.of(this, viewModelFactory).get(MainActivityViewModel::class.java)
 
         viewBinding.apply {
             usersButton.setOnClickListener {

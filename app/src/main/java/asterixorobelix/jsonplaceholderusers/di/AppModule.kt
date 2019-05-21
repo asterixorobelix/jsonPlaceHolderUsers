@@ -7,15 +7,16 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
-@Module
-class AppModule{
+@Module(includes = [ViewModelModule::class])
+class AppModule {
 
     @Provides
     @Singleton
-    fun provideUsersService(): UsersService= Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(
-        GsonConverterFactory.create()).build().create(UsersService::class.java)
+    fun provideUsersService(): UsersService = Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(
+        GsonConverterFactory.create()
+    ).build().create(UsersService::class.java)
 
-    companion object{
+    companion object {
         const val BASE_URL = "https://jsonplaceholder.typicode.com"
     }
 }
