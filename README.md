@@ -20,3 +20,5 @@ when the second button is pressed.
 * [Databinding](https://developer.android.com/topic/libraries/data-binding/)
 * [Retrofit](https://square.github.io/retrofit/)
 * [Dagger](https://google.github.io/dagger/)
+
+![](https://drive.google.com/uc?export=view&id=1w_SPLi70UbB9cy5AsrOchCbJcXZXZ8sS)
