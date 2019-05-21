@@ -19,3 +19,4 @@ when the second button is pressed.
 ## Libraries used
 * [Databinding](https://developer.android.com/topic/libraries/data-binding/)
 * [Retrofit](https://square.github.io/retrofit/)
+* [Dagger](https://google.github.io/dagger/)
