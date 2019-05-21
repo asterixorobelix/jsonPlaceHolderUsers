@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
 
         //todo remove hardcoded viewmodel ref
         mainActivityViewModel = MainActivityViewModel(repository)
-        mainActivityViewModel.getUsers()
 
         viewBinding.apply {
             usersButton.setOnClickListener {

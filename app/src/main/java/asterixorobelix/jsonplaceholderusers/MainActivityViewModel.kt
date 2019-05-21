@@ -18,18 +18,22 @@ class MainActivityViewModel @Inject constructor(private val repository: Reposito
 
     val userEmail: MutableLiveData<String?> = MutableLiveData()
 
-    fun getUsers() {
+    init {
+        getUsers()
+    }
+
+    private fun getUsers() {
         _users.value = null
         GlobalScope.launch {
             try{
                 val response = repository.getUsers()
                 if(response.isSuccessful){
-                    //marshal back to main thread
+                    //marshal back to main thread. Posts a task to a main thread to set the given value.
                     _users.postValue(response.body())
                     userEmail.postValue(response.body()?.find { user -> user.username == USERNAME }?.email)
                 }
             }
-            //handle no internet connection
+            //handle no internet connection or other problems
             catch (ex: Exception){
 
             }
