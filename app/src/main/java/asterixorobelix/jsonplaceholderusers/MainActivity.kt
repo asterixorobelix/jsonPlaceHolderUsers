@@ -3,41 +3,43 @@ package asterixorobelix.jsonplaceholderusers
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import asterixorobelix.jsonplaceholderusers.databinding.ActivityMainBinding
+import asterixorobelix.jsonplaceholderusers.di.ViewModelFactory
 import asterixorobelix.jsonplaceholderusers.fragments.user.UserFragment
 import asterixorobelix.jsonplaceholderusers.models.User
 import asterixorobelix.jsonplaceholderusers.users.UsersFragment
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
+import dagger.android.AndroidInjection
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewBinding: ActivityMainBinding
     private lateinit var mainActivityViewModel: MainActivityViewModel
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        AndroidInjection.inject(this)
         viewBinding = DataBindingUtil.setContentView(
             this, R.layout.activity_main
         )
 
-        //todo remove hardcoded viewmodel ref
-        mainActivityViewModel = MainActivityViewModel()
+        mainActivityViewModel = ViewModelProviders.of(this, viewModelFactory).get(MainActivityViewModel::class.java)
 
         viewBinding.apply {
             usersButton.setOnClickListener {
                 if (isConnectedToInternet(applicationContext) && !mainActivityViewModel.users.value.isNullOrEmpty()) {
-                    if(mainActivityViewModel.users.value!=null){
-                        val usersNames1 = mutableListOf<String>()
-                        for(user in mainActivityViewModel.users.value as List<User>){
-                            usersNames1.add(user.name)
+                    if (mainActivityViewModel.users.value != null) {
+                        val usersNamesOnly = mutableListOf<String>()
+                        for (user in mainActivityViewModel.users.value as List<User>) {
+                            usersNamesOnly.add(user.name)
                         }
-                        UsersFragment(usersNames1.toTypedArray()).showNow(supportFragmentManager, USERS_TAG)
+                        UsersFragment(usersNamesOnly.toTypedArray()).showNow(supportFragmentManager, USERS_TAG)
                     }
                 } else {
                     makeNoInternetConnectionToast(applicationContext, getString(R.string.no_internet))
@@ -57,19 +59,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         mainActivityViewModel.users.observe(this, Observer {
-            if (it.isNullOrEmpty()) {
-                viewBinding.apply {
-                    userButton.isEnabled = false
-                    usersButton.isEnabled = false
-                    progressBar.visibility = View.VISIBLE
-                }
-            }
-            else{
-                viewBinding.apply {
-                    progressBar.visibility = View.GONE
-                    userButton.isEnabled = true
-                    usersButton.isEnabled = true
-                }
+            viewBinding.apply {
+                userButton.isEnabled = !it.isNullOrEmpty()
+                usersButton.isEnabled = !it.isNullOrEmpty()
+                progressBar.visibility = if (it.isNullOrEmpty()) View.VISIBLE else View.GONE
             }
         })
     }

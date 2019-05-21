@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
-
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -24,6 +24,11 @@ android {
     dataBinding {
         enabled = true
     }
+
+}
+
+kapt{
+    generateStubs =true
 }
 
 dependencies {
@@ -40,4 +45,15 @@ dependencies {
     api "com.squareup.retrofit2:converter-gson:2.5.0"
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1"
+
+    // Dagger
+    implementation "com.google.dagger:dagger-android:$daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
+    implementation "com.google.dagger:dagger:$daggerVersion"
+
+    // Architecture Lifecycle Components
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycleVersion"
 }
