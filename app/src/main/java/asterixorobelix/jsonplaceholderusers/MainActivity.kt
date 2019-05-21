@@ -33,11 +33,11 @@ class MainActivity : AppCompatActivity() {
             usersButton.setOnClickListener {
                 if (isConnectedToInternet(applicationContext) && !mainActivityViewModel.users.value.isNullOrEmpty()) {
                     if (mainActivityViewModel.users.value != null) {
-                        val usersNames1 = mutableListOf<String>()
+                        val usersNamesOnly = mutableListOf<String>()
                         for (user in mainActivityViewModel.users.value as List<User>) {
-                            usersNames1.add(user.name)
+                            usersNamesOnly.add(user.name)
                         }
-                        UsersFragment(usersNames1.toTypedArray()).showNow(supportFragmentManager, USERS_TAG)
+                        UsersFragment(usersNamesOnly.toTypedArray()).showNow(supportFragmentManager, USERS_TAG)
                     }
                 } else {
                     makeNoInternetConnectionToast(applicationContext, getString(R.string.no_internet))
